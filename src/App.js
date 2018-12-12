@@ -1,28 +1,43 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
 import './App.css';
+import Navigation from 'dps-navigation/dist/component';
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+    state = {
+        collapsed: false
+    }
+
+    toggleSideNav() {
+        this.setState({
+            collapsed: !this.state.collapsed
+        });
+    }
+
+    render() {
+        const wrapperClass = this.state.collapsed ? 'collapsed' : 'expanded';
+        return (
+            <div className="App">
+                <Navigation standalone={false} urlPrefix={'/dps-demo-app'}
+                            onCollapse={() => this.toggleSideNav()}
+                            onExpand={() => this.toggleSideNav()}/>
+
+                <div className={wrapperClass}>
+                    <div className="App__Header">
+                        <span className="App__Header__spacer"/>
+                        <button>Logout</button>
+                    </div>
+                    <div className="App__Body">
+                        <div className="App__Body__Content">
+                            <div className="hwxTitle">Demo App</div>
+                            <div className="hwxDescription">
+                                This is a demo app.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 }
 
 export default App;
